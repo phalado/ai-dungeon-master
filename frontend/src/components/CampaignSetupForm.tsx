@@ -1,24 +1,25 @@
-import type { CharacterSheet, Lang } from '../types'
-import type { COPY } from '../constants/copy'
+import type { CharacterSheet, Lang } from '../types';
+import type { COPY } from '../constants/copy';
+import { themeSugestion } from '../constants/themeSugestion';
 
 type CampaignSetupFormProps = {
-  sheet: CharacterSheet
-  tags: string
-  isLoading: boolean
-  canStart: boolean
-  buttonLabel: string
-  setupCopy: (typeof COPY)[Lang]['setup']
-  error: string
-  onSheetChange: (sheet: CharacterSheet) => void
-  onTagsChange: (tags: string) => void
-  onStartAdventure: () => void
-}
+  sheet: CharacterSheet;
+  tags: string[];
+  isLoading: boolean;
+  canStart: boolean;
+  buttonLabel: string;
+  setupCopy: (typeof COPY)[Lang]['setup'];
+  error: string;
+  onSheetChange: (sheet: CharacterSheet) => void;
+  onTagsChange: (tags: string[]) => void;
+  onStartAdventure: () => void;
+};
 
 const inputClass =
-  'w-full rounded-xl border border-stone-300 bg-[#fbf7ef] px-3 py-2.5 text-sm text-stone-800 outline-none transition placeholder:text-stone-400 focus:border-slate-500 focus:ring-2 focus:ring-slate-500/20'
+  'w-full rounded-xl border border-stone-300 bg-[#fbf7ef] px-3 py-2.5 text-sm text-stone-800 outline-none transition placeholder:text-stone-400 focus:border-slate-500 focus:ring-2 focus:ring-slate-500/20';
 
 const buttonClass =
-  'inline-flex items-center justify-center rounded-xl bg-stone-950 px-4 py-2.5 text-sm font-semibold text-stone-50 transition hover:bg-stone-800 disabled:cursor-not-allowed disabled:opacity-60'
+  'inline-flex items-center justify-center rounded-xl bg-stone-950 px-4 py-2.5 text-sm font-semibold text-stone-50 transition hover:bg-stone-800 disabled:cursor-not-allowed disabled:opacity-60';
 
 export const CampaignSetupForm = ({
   sheet,
@@ -32,6 +33,21 @@ export const CampaignSetupForm = ({
   onTagsChange,
   onStartAdventure,
 }: CampaignSetupFormProps) => {
+  const toggleTag = (tag: string) => {
+    const exists = tags.includes(tag);
+
+    if (exists) {
+      onTagsChange(tags.filter((currentTag) => currentTag !== tag));
+      return;
+    }
+
+    if (tags.length >= 3) {
+      return;
+    }
+
+    onTagsChange([...tags, tag]);
+  };
+
   return (
     <section
       className="rounded-[22px] border border-amber-950/15 bg-[rgba(255,250,240,0.84)] p-5 shadow-[0_16px_32px_-20px_rgba(31,31,31,0.15)] backdrop-blur md:p-6"
@@ -83,16 +99,35 @@ export const CampaignSetupForm = ({
 
         <label className="grid gap-1.5 text-sm text-stone-700 md:col-span-2">
           {setupCopy.tagsLabel}
-          <input
-            className={inputClass}
-            value={tags}
-            onChange={(event) => onTagsChange(event.target.value)}
-            placeholder={setupCopy.tagsPlaceholder}
-          />
+          <p className="text-xs text-stone-600">
+            {setupCopy.tagsHint} {setupCopy.tagsSelectedCount(tags.length)}
+          </p>
+          <div className="mt-1 flex flex-wrap gap-2">
+            {themeSugestion.map((tag) => {
+              const isSelected = tags.includes(tag);
+              return (
+                <button
+                  key={tag}
+                  type="button"
+                  onClick={() => toggleTag(tag)}
+                  className={`rounded-full border px-3 py-1 text-xs font-semibold transition ${
+                    isSelected
+                      ? 'border-slate-700 bg-slate-700 text-stone-50'
+                      : 'border-stone-300 bg-stone-50 text-stone-700 hover:bg-stone-100'
+                  }`}
+                >
+                  {tag}
+                </button>
+              );
+            })}
+          </div>
         </label>
       </div>
 
       {error && <p className="mt-3 text-sm text-red-800">{error}</p>}
+      {!error && (tags.length < 1 || tags.length > 3) && (
+        <p className="mt-3 text-sm text-red-800">{setupCopy.tagsValidation}</p>
+      )}
 
       <button
         className={`${buttonClass} mt-4`}
@@ -103,5 +138,5 @@ export const CampaignSetupForm = ({
         {isLoading ? setupCopy.loadingStart : buttonLabel}
       </button>
     </section>
-  )
-}
+  );
+};

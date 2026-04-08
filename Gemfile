@@ -20,6 +20,7 @@ end
 
 group :development do
   gem "web-console"
+  gem "awesome_print"
 end
 
 

@@ -13,8 +13,14 @@ Aplicacao simples para criar campanhas de RPG narradas por LLM. O backend Rails 
 Backend:
 
 - `OPENAI_API_KEY`: chave da API da OpenAI
-- `OPENAI_MODEL`: opcional, padrao `gpt-4o-mini`
+- `OPENAI_URI_BASE`: opcional, padrao `https://api.openai.com/v1`
+- `OPENAI_MODEL`: opcional, padrao `gpt-4o-mini` (ou `llama-3.1-70b-versatile` se `OPENAI_URI_BASE` apontar para Groq)
 - `FRONTEND_ORIGINS`: opcional, lista separada por virgula com origens permitidas no CORS. Exemplo: `http://localhost:5173,http://127.0.0.1:5173`
+
+Exemplo para Groq:
+
+- `OPENAI_URI_BASE=https://api.groq.com/openai`
+- `OPENAI_MODEL=llama-3.1-70b-versatile`
 
 Frontend:
 
@@ -45,16 +51,16 @@ Payload esperado:
 
 ```json
 {
-	"message": "Entro na taverna e procuro o informante.",
-	"character": {
-		"name": "Aria",
-		"class": "Ladina Arcana",
-		"background": "Ex-cartografa de uma ordem proibida",
-		"goal": "Recuperar um grimorio perdido"
-	},
-	"history": [],
-	"tags": ["fantasia sombria", "intriga politica"],
-	"language": "pt-br"
+  "message": "Entro na taverna e procuro o informante.",
+  "character": {
+    "name": "Aria",
+    "class": "Ladina Arcana",
+    "background": "Ex-cartografa de uma ordem proibida",
+    "goal": "Recuperar um grimorio perdido"
+  },
+  "history": [],
+  "tags": ["fantasia sombria", "intriga politica"],
+  "language": "pt-br"
 }
 ```
 
