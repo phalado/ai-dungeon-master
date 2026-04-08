@@ -2,6 +2,8 @@
 
 Aplicacao simples para criar campanhas de RPG narradas por LLM. O backend Rails expõe a API de mestragem e o frontend React/Vite entrega a interface de criacao de personagem e chat da aventura.
 
+Live version: https://ai-dungeon-master-front.onrender.com
+
 ## Stack
 
 - Ruby on Rails 8 em modo API
