@@ -11,7 +11,10 @@ import braFlag from './assets/bra.svg';
 import usaFlag from './assets/eua.svg';
 import espFlag from './assets/spain.svg';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:3000';
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:3000').replace(
+  /\/+$/,
+  '',
+);
 const CAMPAIGNS_STORAGE_KEY = 'ai-dungeon-master:campaigns';
 const ROLL_MARKER_PATTERN = /\[\[ROLL:\s*([^\]]+)\s*\]\]/i;
 const DICE_RESULTS_COOKIE = 'ai_dungeon_dice_results';

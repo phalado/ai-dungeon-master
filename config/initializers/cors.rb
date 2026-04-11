@@ -7,7 +7,10 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    allowed_origins = ENV.fetch("FRONTEND_ORIGINS", "http://localhost:5173").split(",").map(&:strip)
+    allowed_origins = ENV.fetch("FRONTEND_ORIGINS", "http://localhost:5173")
+      .split(",")
+      .map { |origin| origin.strip.sub(%r{/+\z}, "") }
+      .reject(&:empty?)
 
     origins(*allowed_origins)
 

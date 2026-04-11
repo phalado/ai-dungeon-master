@@ -17,7 +17,7 @@ Backend:
 - `OPENAI_API_KEY`: chave da API da OpenAI
 - `OPENAI_URI_BASE`: opcional, padrao `https://api.openai.com/v1`
 - `OPENAI_MODEL`: opcional, padrao `gpt-4o-mini` (ou `llama-3.1-70b-versatile` se `OPENAI_URI_BASE` apontar para Groq)
-- `FRONTEND_ORIGINS`: opcional, lista separada por virgula com origens permitidas no CORS. Exemplo: `http://localhost:5173,http://127.0.0.1:5173`
+- `FRONTEND_ORIGINS`: opcional, lista separada por virgula com origens permitidas no CORS (sem barra final). Exemplo: `http://localhost:5173,http://127.0.0.1:5173`
 
 Exemplo para Groq:
 
@@ -26,7 +26,7 @@ Exemplo para Groq:
 
 Frontend:
 
-- `VITE_API_BASE_URL`: opcional, padrao `http://localhost:3000`
+- `VITE_API_BASE_URL`: opcional, padrao `http://localhost:3000` (com ou sem barra final)
 
 ## Como rodar
 
